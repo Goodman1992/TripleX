@@ -1,5 +1,5 @@
 #include<iostream>
-//#include<>
+#include<ctime>
 
 void PrintIntroduction(int Diffculty){
 
@@ -13,9 +13,9 @@ bool PlayGame(int Diffculty){
     int CodeA, CodeB, CodeC, CodeSum, CodeProduct, GuessA, GuessB, GuessC, GuessSum, GuessProduct;
     PrintIntroduction(Diffculty);
 
-    CodeA=4;
-    CodeB=3;
-    CodeC=2;
+    CodeA=( rand() % Diffculty )+Diffculty;
+    CodeB=( rand() % Diffculty )+Diffculty;
+    CodeC=( rand() % Diffculty )+Diffculty;
 
     CodeSum=CodeA+CodeB+CodeC;
     CodeProduct=CodeA*CodeB*CodeC;
@@ -35,27 +35,29 @@ bool PlayGame(int Diffculty){
 
     //winnning condition
     if(GuessSum == CodeSum && GuessProduct == CodeProduct){
-        std::cout << "\nYou win!";
+        std::cout << "\n*** Well done agent! You have extracted a file! Keep going!***";
         return true;
     }else{
-        std::cout << "\nYou Lose!";
+        std::cout << "\n*** You entered the wrong code! Careful agent! Try again!***";
         return false;
     }
 }
 
 void main(){
-    bool bLevelComplete;
+    srand(time(NULL)); // creates new random seq based on time of the day
+    int const MaxDifficulty = 5;
     int LevelDiffculty =1 ;
-    while (true)
+
+    bool bLevelComplete;
+
+    while (LevelDiffculty<=MaxDifficulty) // Loop game untill all game completes
     {
-        
         bLevelComplete=PlayGame(LevelDiffculty);
-        std::cin.clear();
-        std::cin.ignore();
+        std::cin.clear(); // clear any errors
+        std::cin.ignore(); // discards the buffer
         if (bLevelComplete){
             LevelDiffculty++;
-        }else{
-            continue;
         }
     }
+    std::cout<<"\n *** Great work agent! You got all the files! Now get out of there! ***\n";
 }
